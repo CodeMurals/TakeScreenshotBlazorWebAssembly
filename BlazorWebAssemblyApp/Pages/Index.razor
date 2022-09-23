@@ -1,0 +1,31 @@
+﻿@page "/"
+@inject IJSRuntime jsRuntime
+
+<h3>Take Screenshot with Blazor WebAssembly</h3>
+
+<div id="screenshotContainer" style="width: 50%;background-color: #0d6efd; color: white;">
+    <h1>@message</h1>
+</div>
+<br />
+<input type="text" @bind="message" @bind:event="oninput" />
+<br />
+<br />
+<h4>Screenshot:</h4>
+<div id="output" style="width: 50%"></div>
+
+<button type="button" class="btn btn-info" @onclick="Take">Take</button>
+<button type="button" class="btn btn-info" @onclick="Download">Download</button>
+
+@code {
+    private string message = "";
+
+    public async Task Take()
+    {
+        await jsRuntime.InvokeVoidAsync("Takeshot");
+    }
+
+    public async Task Download()
+    {
+        await jsRuntime.InvokeVoidAsync("DownloadImg");
+    }
+}
